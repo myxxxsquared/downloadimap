@@ -11,11 +11,11 @@ import getpass
 from imapclient import imap_utf7
 
 parser = argparse.ArgumentParser('Download IMAP')
-parser.add_argument('-s', '--server', type=str, required=True, description='Server Name')
-parser.add_argument('-p', '--port', type=int, default=993, description='Server Port')
-parser.add_argument('-e', '--email', type=str, reuqired=True, description='Email Address')
-parser.add_argument('-P', '--password', type=str, default=None, description='Password')
-parser.add_argument('-o', '--output', type=str, default='download', description='Output Folder')
+parser.add_argument('-s', '--server', type=str, required=True, help='Server Name')
+parser.add_argument('-p', '--port', type=int, default=993, help='Server Port')
+parser.add_argument('-e', '--email', type=str, required=True, help='Email Address')
+parser.add_argument('-P', '--password', type=str, default=None, help='Password')
+parser.add_argument('-o', '--output', type=str, default='download', help='Output Folder')
 
 args = parser.parse_args()
 
