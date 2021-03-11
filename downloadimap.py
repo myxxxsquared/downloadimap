@@ -76,7 +76,9 @@ def get_mails(*folders):
         M.select(name_select)
         mailids = M.search(None, 'ALL')[1][0].split()
         for mailid in mailids:
-            mail = M.fetch(mailid, '(RFC822)')[1][0][1]
+            mail1 = M.fetch(mailid, 'BODY[HEADER]')[1][0][1]
+            mail2 = M.fetch(mailid, 'BODY[TEXT]')[1][0][1]
+            mail = mail1 + mail2
             yield name_show, mail
 
 for f, mail in get_mails(*get_folders(M)):
