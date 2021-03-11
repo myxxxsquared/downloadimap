@@ -5,6 +5,7 @@ import imaplib
 import os
 import re
 import socket
+import traceback
 
 import imapclient
 import socks
@@ -71,7 +72,12 @@ def get_mails(*folders):
     for name_show, name_select in folders:
         print(name_select)
         M.select(name_select)
-        mailids = M.search(None, "ALL")[1][0]
+        try:
+            mailids = M.search(None, "ALL")[1][0]
+        except M.error:
+            traceback.print_exc()
+            continue
+
         if mailids is None:
             continue
         mailids = mailids.split()
