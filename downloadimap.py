@@ -71,8 +71,8 @@ def get_folders(M):
 def get_mails(*folders):
     for name_show, name_select in folders:
         print(name_select)
-        M.select(name_select)
         try:
+            M.select(name_select)
             mailids = M.search(None, "ALL")[1][0]
         except M.error:
             traceback.print_exc()
@@ -83,8 +83,16 @@ def get_mails(*folders):
         mailids = mailids.split()
         for mailid in mailids:
             mail1 = M.fetch(mailid, "BODY[HEADER]")[1][0][1]
-            mail2 = M.fetch(mailid, "BODY[TEXT]")[1][0][1]
-            mail = mail1 + mail2
+            mail2 = M.fetch(mailid, "BODY[TEXT]")[1][0]
+            if isinstance(mail2, bytes):
+                mail2 = mail2[mail2.index(b'"') + 1 : mail2.rindex(b'"')]
+            else:
+                mail2 = mail2[1]
+            try:
+                mail = mail1 + mail2
+            except:
+                traceback.print_exc()
+                continue
             yield name_show, mail
 
 
