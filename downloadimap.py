@@ -8,7 +8,6 @@ import socket
 import traceback
 
 import imapclient
-import socks
 
 parser = argparse.ArgumentParser("Download IMAP")
 parser.add_argument("-s", "--server", type=str, required=True, help="Server Name")
@@ -25,6 +24,7 @@ if args.password is None:
     args.password = getpass.getpass()
 
 if args.proxy is not None:
+    import socks
     socks.setdefaultproxy(socks.PROXY_TYPE_HTTP, args.proxy, args.proxy_port, True)
     socket.socket = socks.socksocket
 
